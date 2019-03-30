@@ -1,3 +1,27 @@
-<p>
-  list works!
-</p>
+<ng-container *ngIf="bookmarks">
+  <ng-container [ngSwitch]="bookmarks.type">
+    <div
+      class="title-folder"
+      *ngSwitchCase="'folder'"
+      [ngStyle]="{
+        'font-size': 18 + 'px'
+      }"
+    >
+      {{ bookmarks.title }}
+    </div>
+    <!-- <div class="title-bookmark" *ngSwitchCase="'bookmark'" (click)="openBookmark(bookmarks)">
+      <div class="label-bookmark">{{ bookmarks.title }}</div>
+      <div class="text-bookmark">{{ textBookmark }}</div>
+    </div> -->
+    <app-node [node]="bookmarks" *ngSwitchCase="'bookmark'"></app-node>
+  </ng-container>
+  <app-list
+    *ngFor="let subBookmarks of bookmarks.children"
+    class="node"
+    [ngClass]="{
+      bookmark: subBookmarks.type === 'bookmark',
+      folder: subBookmarks.type === 'folder'
+    }"
+    [children]="subBookmarks"
+  ></app-list>
+</ng-container>

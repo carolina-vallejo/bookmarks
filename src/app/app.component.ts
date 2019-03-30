@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'bookmarks';
+  public view: string;
+
+  constructor() {
+    this.view = window['extensionMode'];
+  }
 }

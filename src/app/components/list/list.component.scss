@@ -1,0 +1,26 @@
+@import '../../../assets/sass/defaults';
+
+:host {
+  display: block;
+  position: relative;
+}
+
+.node {
+  width: $node-width;
+  display: inline-block;
+}
+
+.folder {
+  width: 100%;
+  border: 1px dashed rgba(#fff, 0.5);
+  padding: $padding-folder;
+  background: rgba(#904e95, 0.1);
+  margin: 10px;
+}
+
+.title-folder {
+  color: #fff;
+  font-weight: 300;
+  font-size: 24px;
+  margin-bottom: 10px;
+}

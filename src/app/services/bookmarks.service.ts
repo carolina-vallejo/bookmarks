@@ -15,4 +15,12 @@ export class BookmarksService {
       });
     });
   }
+
+  public searchBookmarks(query: any) {
+    return new Promise((resolve, reject) => {
+      chrome.bookmarks.search(query, bookmarks => {
+        resolve(bookmarks);
+      });
+    });
+  }
 }

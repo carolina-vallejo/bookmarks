@@ -1,5 +1,4 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  Carolina rocks very much
-</div>
-<app-list></app-list>
+<div class="container"></div>
+<app-list class="root-list" *ngIf="view === 'options'"></app-list>
+
+<app-popup *ngIf="view === 'popup'"> </app-popup>

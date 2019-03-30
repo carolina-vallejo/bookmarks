@@ -1,0 +1,9 @@
+@import '../../../assets/sass/defaults';
+
+:host {
+  display: block;
+  padding: $padding-popup;
+  width: 550px;
+  height: 600px;
+  overflow: auto;
+}

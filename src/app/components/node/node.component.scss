@@ -1,0 +1,42 @@
+@import '../../../assets/sass/defaults';
+
+:host {
+  display: inline-block;
+  text-align: center;
+  padding: 0 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  width: 100%;
+  &:hover {
+    .circle {
+      background: rgba(#fff, 0.2);
+    }
+  }
+}
+
+.circle {
+  border: 1px solid rgba(#fff, 0.3);
+  width: $node-circle;
+  height: $node-circle;
+  border-radius: 100%;
+  text-transform: uppercase;
+  display: block;
+  text-align: center;
+  line-height: $node-circle;
+  margin: 5px auto;
+  color: #fff;
+  font-size: 18px;
+  transition: all 200ms ease;
+}
+
+.title {
+  display: block;
+  font-size: 12px;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  color: #fff;
+  text-transform: initial;
+  text-align: center;
+  text-overflow: ellipsis;
+}
