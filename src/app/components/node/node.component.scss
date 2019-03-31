@@ -31,7 +31,7 @@
 
 .title {
   display: block;
-  font-size: 12px;
+  font-size: 14px;
   width: 100%;
   white-space: nowrap;
   overflow: hidden;
@@ -39,4 +39,31 @@
   text-transform: initial;
   text-align: center;
   text-overflow: ellipsis;
+}
+
+.folder {
+  border: 1px solid $text;
+  width: $node-circle - 5px;
+  height: $node-circle - 5px;
+  border-radius: 0;
+  text-transform: uppercase;
+  display: block;
+  text-align: center;
+  line-height: $node-circle - 5px;
+  margin: 5px auto;
+  color: #fff;
+  font-size: 18px;
+  transition: all 200ms ease;
+  position: relative;
+  &::before {
+    content: '';
+    width: $node-circle/2;
+    height: 7px;
+    display: block;
+    position: absolute;
+    top: -7px;
+    left: -1px;
+    border: 1px solid $text;
+    box-sizing: border-box;
+  }
 }

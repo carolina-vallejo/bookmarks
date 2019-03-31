@@ -16,8 +16,6 @@ export class BookmarkComponent implements OnInit {
   ngOnInit() {
     this.bookmarksService.getBookmarks().then(bookmarks => {
       this.bookmarks = this.recursion(bookmarks[0].children[0]);
-
-      console.log(bookmarks);
     });
   }
 

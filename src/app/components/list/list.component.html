@@ -9,10 +9,7 @@
     >
       {{ bookmarks.title }}
     </div>
-    <!-- <div class="title-bookmark" *ngSwitchCase="'bookmark'" (click)="openBookmark(bookmarks)">
-      <div class="label-bookmark">{{ bookmarks.title }}</div>
-      <div class="text-bookmark">{{ textBookmark }}</div>
-    </div> -->
+
     <app-node [node]="bookmarks" *ngSwitchCase="'bookmark'"></app-node>
   </ng-container>
   <app-list

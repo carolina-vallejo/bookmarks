@@ -18,6 +18,7 @@ export class NodeComponent implements OnInit {
   }
 
   public openBookmark(url) {
-    window.open(url);
+    // window.open(url);
+    console.log(this.node);
   }
 }

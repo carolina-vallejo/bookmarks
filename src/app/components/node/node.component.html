@@ -1,5 +1,8 @@
 <div (click)="openBookmark(node.url)">
-  <div class="circle">
+  <div class="circle" *ngIf="!node.dateGroupModified">
+    {{ letter }}
+  </div>
+  <div class="folder" *ngIf="node.dateGroupModified">
     {{ letter }}
   </div>
   <div class="title">
