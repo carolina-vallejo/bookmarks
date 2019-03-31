@@ -1,15 +1,18 @@
 <div
+  class="inner"
+  [title]="node.url"
   (click)="openBookmark(node.url)"
   [ngStyle]="{
     opacity: node.count === 1 ? 1 : 0.3
   }"
 >
-  <div class="circle" *ngIf="!node.dateGroupModified">
-    {{ letter }}
-  </div>
-  <div class="folder" *ngIf="node.dateGroupModified">
-    {{ letter }}
-  </div>
+  <div
+    class="circle"
+    [ngStyle]="{
+      'background-image': favicon
+    }"
+  ></div>
+
   <div class="title">
     {{ node.title }}
   </div>

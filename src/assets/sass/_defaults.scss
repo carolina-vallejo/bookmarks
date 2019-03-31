@@ -3,16 +3,20 @@ $text: #67777f;
 $font: 'Titillium Web';
 
 // Background
-$gradient: linear-gradient(to bottom, #904e95 27%, #e96443 110%);
+$gradient: linear-gradient(90deg, #ed5269 27%, #fead09 110%);
+
+$gradientDark: linear-gradient(45deg, #433746 27%, #423e5a 110%);
 
 //  MARGINS
 $padding-top-popup: 20px;
+$padding-left-popup: 30px;
 $padding-popup: 20px 30px;
 
 //  SIZE
 $node-width: 50%;
-$node-circle: 36px;
+$node-circle: 34px;
 $search-height: 40px;
 $header-height: $search-height + $padding-top-popup * 2;
+
 // Folders
 $padding-folder: 10px;

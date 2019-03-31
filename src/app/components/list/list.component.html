@@ -16,6 +16,7 @@
 
     <app-node [node]="bookmarks" *ngSwitchCase="'bookmark'"></app-node>
   </ng-container>
+  <!-- <cdk-virtual-scroll-viewport [itemSize]="100"> -->
   <app-list
     *ngFor="let subBookmarks of bookmarks.children"
     class="node"
@@ -25,4 +26,5 @@
     }"
     [children]="subBookmarks"
   ></app-list>
+  <!-- </cdk-virtual-scroll-viewport> -->
 </ng-container>

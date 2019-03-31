@@ -1,22 +1,4 @@
 @import '../assets/sass/defaults';
-.container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 110vh;
-  background: linear-gradient(to bottom, #734b6d, #42275a);
-  background: #141e30; /* fallback for old browsers */
-  background: -webkit-linear-gradient(to bottom, #243b55, #141e30); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #243b55, #141e30); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  background: #2c3e50; /* fallback for old browsers */
-  background: -webkit-linear-gradient(to bottom, #4ca1af, #2c3e50); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #4ca1af, #2c3e50); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-  background: #e96443; /* fallback for old browsers */
-  background: -webkit-linear-gradient(to bottom, #904e95, #e96443); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #904e95, #e96443); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-}
 
 .root-list {
   padding: 10%;

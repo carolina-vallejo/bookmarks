@@ -10,20 +10,24 @@ export class BookmarkComponent implements OnInit {
   public bookmarks;
 
   public results;
+  public query: string;
 
   constructor(private readonly bookmarksService: BookmarksService) {}
 
   ngOnInit() {
     this.bookmarksService.getBookmarks().then(bookmarks => {
       this.bookmarks = bookmarks;
-      console.log('GETALL', bookmarks);
     });
   }
 
   public search(event) {
     this.bookmarksService.searchBookmarks(event.target.value).then(bookmarks => {
       this.results = bookmarks;
-      console.log('CUSTOM SEARCH', bookmarks);
     });
+  }
+
+  public cleanBookmarks() {
+    this.results = null;
+    this.query = null;
   }
 }
