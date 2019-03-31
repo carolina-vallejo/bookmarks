@@ -1,6 +1,7 @@
 <ng-container *ngIf="bookmarks">
   <ng-container [ngSwitch]="bookmarks.type">
     <div
+      (click)="openBookmark(bookmarks)"
       class="title-folder"
       *ngSwitchCase="'folder'"
       [ngStyle]="{
@@ -8,6 +9,9 @@
       }"
     >
       {{ bookmarks.title }}
+      <div class="num">
+        {{ bookmarks.count }}
+      </div>
     </div>
 
     <app-node [node]="bookmarks" *ngSwitchCase="'bookmark'"></app-node>

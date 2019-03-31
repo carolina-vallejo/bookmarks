@@ -26,6 +26,7 @@ export class ListComponent implements OnInit {
   }
 
   public openBookmark(list) {
-    window.open(list.url);
+    console.log('folder', list);
+    // window.open(list.url);
   }
 }

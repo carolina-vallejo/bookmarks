@@ -1,7 +1,4 @@
 <div class="search">
   <input class="input-search" (keyup.enter)="search($event)" placeholder="Search in Bookmarks" />
 </div>
-<div class="nodes" *ngIf="results">
-  <app-node [node]="result" *ngFor="let result of results" class="node"></app-node>
-</div>
-<app-list [bookmarks]="bookmarks"></app-list>
+<app-list [bookmarks]="results || bookmarks"></app-list>

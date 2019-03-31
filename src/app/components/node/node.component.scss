@@ -42,7 +42,7 @@
 }
 
 .folder {
-  border: 1px solid $text;
+  border: 1px solid rgba(#fff, 0.3);
   width: $node-circle - 5px;
   height: $node-circle - 5px;
   border-radius: 0;
@@ -63,7 +63,7 @@
     position: absolute;
     top: -7px;
     left: -1px;
-    border: 1px solid $text;
+    border: 1px solid rgba(#fff, 0.3);
     box-sizing: border-box;
   }
 }

@@ -1,4 +1,9 @@
-<div (click)="openBookmark(node.url)">
+<div
+  (click)="openBookmark(node.url)"
+  [ngStyle]="{
+    opacity: node.count === 1 ? 1 : 0.3
+  }"
+>
   <div class="circle" *ngIf="!node.dateGroupModified">
     {{ letter }}
   </div>
