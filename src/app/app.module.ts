@@ -9,11 +9,12 @@ import { BookmarkComponent } from './components/list/bookmark/bookmark.component
 import { PopupComponent } from './components/popup/popup.component';
 import { NodeComponent } from './components/node/node.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { DropService } from './services/drop.service';
 
 @NgModule({
   declarations: [AppComponent, ListComponent, BookmarkComponent, PopupComponent, NodeComponent],
   imports: [BrowserModule, FormsModule, ScrollingModule],
-  providers: [BookmarksService],
+  providers: [BookmarksService, DropService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

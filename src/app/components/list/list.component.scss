@@ -13,25 +13,26 @@
 
 .folder {
   width: 100%;
-  border: 1px dashed rgba(#fff, 0.5);
+  border: 1px dashed $text;
   padding: $padding-folder;
-  background: rgba(#904e95, 0.1);
   margin: 10px;
 }
 
 .title-folder {
-  color: #fff;
+  color: $text;
   font-weight: 300;
   font-size: 24px;
   margin-bottom: 10px;
+  font-weight: 600;
 }
 
 .num {
   float: right;
-  background: rgba(#fff, 0.3);
   padding: 0px 12px;
   border-radius: 20px;
   font-size: 14px;
   height: 20px;
   line-height: 20px;
+  color: $text;
+  border: 1px solid $text;
 }

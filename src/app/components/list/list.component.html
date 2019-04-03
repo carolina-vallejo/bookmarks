@@ -14,17 +14,34 @@
       </div>
     </div>
 
-    <app-node [node]="bookmarks" *ngSwitchCase="'bookmark'"></app-node>
+    <app-node [id]="bookmarks.id" [node]="bookmarks" *ngSwitchCase="'bookmark'" class="bookmark-drag"></app-node>
   </ng-container>
-  <!-- <cdk-virtual-scroll-viewport [itemSize]="100"> -->
-  <app-list
-    *ngFor="let subBookmarks of bookmarks.children"
-    class="node"
-    [ngClass]="{
-      bookmark: subBookmarks.type === 'bookmark',
-      folder: subBookmarks.type === 'folder'
-    }"
-    [children]="subBookmarks"
-  ></app-list>
-  <!-- </cdk-virtual-scroll-viewport> -->
+  <ng-container *ngFor="let subBookmarks of bookmarks.children">
+    <ng-container *ngIf="typeData === 'all'">
+      <app-list
+        typeData="all"
+        class="node"
+        [ngClass]="{
+          bookmark: subBookmarks.type === 'bookmark',
+          folder: subBookmarks.type === 'folder'
+        }"
+        [children]="subBookmarks"
+      ></app-list>
+    </ng-container>
+
+    <ng-container *ngIf="typeData === 'folder'">
+      <app-list
+        [id]="subBookmarks.id"
+        typeData="folder"
+        *ngIf="subBookmarks.type === 'folder'"
+        class="node"
+        [ngClass]="{
+          bookmark: subBookmarks.type === 'bookmark',
+          folder: subBookmarks.type === 'folder',
+          'folder-drop': subBookmarks.type === 'folder'
+        }"
+        [children]="subBookmarks"
+      ></app-list>
+    </ng-container>
+  </ng-container>
 </ng-container>

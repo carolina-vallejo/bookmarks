@@ -2,13 +2,12 @@
 @import url('https://fonts.googleapis.com/css?family=Titillium+Web:300,400,600,700');
 @import url('https://fonts.googleapis.com/css?family=Inconsolata');
 @import './assets/sass/defaults';
-
+@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700');
 * {
   box-sizing: border-box;
 }
 
 body {
-  background: #141e30;
-  background: #904e95;
+  background: #fff;
   font-family: $font;
 }

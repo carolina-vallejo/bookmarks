@@ -14,6 +14,9 @@ export class ListComponent implements OnInit {
   @Input()
   bookmarks: any;
 
+  @Input()
+  typeData: string;
+
   public textBookmark: string;
 
   constructor() {}

@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+import { resolve } from 'dns';
+import { reject } from 'q';
 
 declare const chrome;
 
@@ -6,12 +9,13 @@ declare const chrome;
   providedIn: 'root'
 })
 export class BookmarksService {
+  public removed: Subject<any> = new Subject<any>();
   constructor() {}
 
   public getBookmarks() {
     return new Promise((resolve, reject) => {
       chrome.bookmarks.getTree(bookmarks => {
-        resolve(this.recursion(bookmarks[0].children[0]));
+        resolve(this.recursion(bookmarks[0].children[2]));
       });
     });
   }
@@ -21,6 +25,28 @@ export class BookmarksService {
       chrome.bookmarks.getTree(bookmarks => {
         resolve(this.recursion(bookmarks[0].children[0], query));
       });
+    });
+  }
+
+  public moveBookmark(id: number, parentId: string) {
+    return new Promise((resolve, reject) => {
+      chrome.bookmarks.move(id, { parentId }, bookmark => {
+        resolve(bookmark);
+      });
+    });
+  }
+
+  public removeBookmark(id: number) {
+    return new Promise((resolve, reject) => {
+      chrome.bookmarks.remove(id, () => {
+        resolve();
+      });
+    });
+  }
+
+  public getUrlActiveTab() {
+    return new Promise((resolve, reject) => {
+      // chrome.tabs.query(object queryInfo, function callback)
     });
   }
 

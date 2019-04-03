@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { BookmarksService } from 'src/app/services/bookmarks.service';
 
 @Component({
   selector: 'app-node',
@@ -12,7 +13,7 @@ export class NodeComponent implements OnInit {
   public letter: string;
   public favicon: string;
 
-  constructor() {}
+  constructor(private readonly bookmarksService: BookmarksService) {}
 
   ngOnInit() {
     this.letter = this.node.title.slice(0, 1);
@@ -22,7 +23,12 @@ export class NodeComponent implements OnInit {
   }
 
   public openBookmark(url) {
-    window.open(url);
+    // window.open(url);
     console.log(this.node);
+  }
+
+  public removeBookmark(id: string, event) {
+    event.stopPropagation();
+    this.bookmarksService.removed.next(id);
   }
 }
