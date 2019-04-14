@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { resolve } from 'dns';
-import { reject } from 'q';
 
 declare const chrome;
 
@@ -10,20 +8,22 @@ declare const chrome;
 })
 export class BookmarksService {
   public removed: Subject<any> = new Subject<any>();
+
   constructor() {}
 
-  public getBookmarks() {
+  public getBookmarks(rootFolderId) {
     return new Promise((resolve, reject) => {
       chrome.bookmarks.getTree(bookmarks => {
-        resolve(this.recursion(bookmarks[0].children[2]));
+        console.log(bookmarks);
+        resolve(this.recursion(bookmarks[0].children[parseInt(rootFolderId, 10)]));
       });
     });
   }
 
-  public searchBookmarks(query: string) {
+  public searchBookmarks(query: string, rootFolderId) {
     return new Promise((resolve, reject) => {
       chrome.bookmarks.getTree(bookmarks => {
-        resolve(this.recursion(bookmarks[0].children[0], query));
+        resolve(this.recursion(bookmarks[0].children[parseInt(rootFolderId, 10)], query));
       });
     });
   }
@@ -46,7 +46,34 @@ export class BookmarksService {
 
   public getUrlActiveTab() {
     return new Promise((resolve, reject) => {
-      // chrome.tabs.query(object queryInfo, function callback)
+      chrome.tabs.query(
+        {
+          active: true,
+          currentWindow: true
+        },
+        tabs => {
+          const tabURL = tabs[0];
+          resolve(tabURL);
+        }
+      );
+    });
+  }
+
+  public addBookmark(url, title?, folderId?) {
+    return new Promise((resolve, reject) => {
+      const obj = {
+        url
+      };
+      if (folderId) {
+        obj['parentId'] = folderId;
+      }
+      if (title) {
+        obj['title'] = title;
+      }
+
+      chrome.bookmarks.create(obj, () => {
+        resolve();
+      });
     });
   }
 
@@ -76,7 +103,7 @@ export class BookmarksService {
         })
         .sort((childA, childB) => {
           // sort by count
-          return childB.count - childA.count;
+          return childB.dateAdded - childA.dateAdded;
         })
         .sort((childA, childB) => {
           // sort by type

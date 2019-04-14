@@ -10,10 +10,19 @@ import { PopupComponent } from './components/popup/popup.component';
 import { NodeComponent } from './components/node/node.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { DropService } from './services/drop.service';
-
+import { MomentModule } from 'ngx-moment';
 @NgModule({
   declarations: [AppComponent, ListComponent, BookmarkComponent, PopupComponent, NodeComponent],
-  imports: [BrowserModule, FormsModule, ScrollingModule],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    ScrollingModule,
+    MomentModule.forRoot({
+      relativeTimeThresholdOptions: {
+        m: 59
+      }
+    })
+  ],
   providers: [BookmarksService, DropService],
   bootstrap: [AppComponent]
 })

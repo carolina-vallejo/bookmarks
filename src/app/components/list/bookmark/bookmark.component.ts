@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { BookmarksService } from 'src/app/services/bookmarks.service';
 import { DropService } from 'src/app/services/drop.service';
 
@@ -12,12 +12,13 @@ export class BookmarkComponent implements OnInit, AfterViewInit {
   public results;
   public query: string;
 
+  private rootFolderId = '2';
+  private baseFolderId = '3';
+
   constructor(private readonly bookmarksService: BookmarksService, private readonly dropService: DropService) {}
 
   ngOnInit() {
-    this.bookmarksService.getBookmarks().then(bookmarks => {
-      this.bookmarks = bookmarks;
-    });
+    this.refreshData();
   }
 
   ngAfterViewInit() {
@@ -39,7 +40,7 @@ export class BookmarkComponent implements OnInit, AfterViewInit {
   }
 
   public search(event) {
-    this.bookmarksService.searchBookmarks(event.target.value).then(bookmarks => {
+    this.bookmarksService.searchBookmarks(event.target.value, this.rootFolderId).then(bookmarks => {
       this.results = bookmarks;
     });
   }
@@ -50,8 +51,18 @@ export class BookmarkComponent implements OnInit, AfterViewInit {
   }
 
   public refreshData() {
-    this.bookmarksService.getBookmarks().then(bookmarks => {
+    this.bookmarksService.getBookmarks(this.rootFolderId).then(bookmarks => {
       this.bookmarks = bookmarks;
+    });
+  }
+
+  public addBookmark() {
+    this.bookmarksService.getUrlActiveTab().then((tabUrl: any) => {
+      console.log(tabUrl.url);
+      this.bookmarksService.addBookmark(tabUrl.url, tabUrl.title, this.baseFolderId).then(() => {
+        console.log('done');
+        this.refreshData();
+      });
     });
   }
 }

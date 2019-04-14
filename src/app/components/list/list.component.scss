@@ -16,6 +16,8 @@
   border: 1px dashed $text;
   padding: $padding-folder;
   margin: 10px;
+  background: rgba($text, 0.5);
+  cursor: pointer;
 }
 
 .title-folder {

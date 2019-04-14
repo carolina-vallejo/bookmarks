@@ -34,15 +34,24 @@
 
 .title {
   background: rgba(#fff, 1);
-  display: block;
   font-size: 14px;
   width: calc(100% - #{$node-circle});
+  color: $text;
+  padding: 0 10px;
+  height: $node-circle;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: flex-start;
+  align-content: stretch;
+}
+
+.text {
+  width: 90%;
+  text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  color: $text;
-  text-overflow: ellipsis;
-  padding: 10px;
-  height: $node-circle;
 }
 
 .folder {
@@ -79,4 +88,8 @@
   top: 50%;
   transform: translate(0, -50%);
   cursor: pointer;
+}
+.date {
+  font-size: 11px;
+  opacity: 0.5;
 }

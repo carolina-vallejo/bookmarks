@@ -1,12 +1,21 @@
-<div class="search">
-  <input class="input-search" [(ngModel)]="query" (keyup.enter)="search($event)" placeholder="Search in Bookmarks" />
-  <div class="clear" (click)="cleanBookmarks()" *ngIf="results">×</div>
+<div class="header">
+  <!--  SEARCH -->
+  <div class="input-search-wrapper">
+    <input class="input-search" [(ngModel)]="query" (keyup.enter)="search($event)" placeholder="Search in Bookmarks" />
+    <div class="clear-search" (click)="cleanBookmarks()" *ngIf="results">×</div>
+  </div>
+
+  <!-- ADD BOOKMARK -->
   <div class="actions">
     <div class="add-bookmark" (click)="addBookmark()">+</div>
   </div>
 </div>
+
+<!-- CONTAINER -->
 <div class="container">
+  <!-- FOLDERS -->
   <app-list class="list-container" [bookmarks]="results || bookmarks" typeData="folder"></app-list>
 
+  <!-- BOOKMARKS TREE -->
   <app-list class="list-folders" [bookmarks]="results || bookmarks" typeData="all"></app-list>
 </div>
