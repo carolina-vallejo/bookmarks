@@ -19,8 +19,9 @@ export class NodeComponent implements OnInit, OnDestroy {
   idNode: string;
 
   public favicon: string;
-  // public idNode: string;
   private subs: Array<Subscription> = [];
+
+  private allowUrl: boolean = true;
 
   constructor(private readonly bookmarksService: BookmarksService, private readonly dropService: DropService) {}
 
@@ -35,6 +36,13 @@ export class NodeComponent implements OnInit, OnDestroy {
       this.dropService.onDrag.subscribe(obj => {
         if (this.idNode === obj.node.id) {
           this.dragging = obj.drag;
+          if (obj.drag) {
+            this.allowUrl = false;
+          } else {
+            setTimeout(() => {
+              this.allowUrl = true;
+            }, 0);
+          }
         }
       })
     );
@@ -45,11 +53,14 @@ export class NodeComponent implements OnInit, OnDestroy {
   }
 
   public openBookmark(url) {
-    window.open(url);
+    if (this.allowUrl) {
+      console.log('click');
+      window.open(url);
+    }
   }
 
   public removeBookmark(id: string, event) {
     event.stopPropagation();
-    this.bookmarksService.removed.next(id);
+    this.bookmarksService.removedBookmark.next(id);
   }
 }

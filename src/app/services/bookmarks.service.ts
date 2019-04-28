@@ -7,15 +7,15 @@ declare const chrome;
   providedIn: 'root'
 })
 export class BookmarksService {
-  public removed: Subject<any> = new Subject<any>();
+  public removedBookmark: Subject<any> = new Subject<any>();
   public removedFolder: Subject<any> = new Subject<any>();
   public addedFolder: Subject<any> = new Subject<any>();
   public updated: Subject<any> = new Subject<any>();
   public refreshData: Subject<any> = new Subject<any>();
   public refreshList: Subject<any> = new Subject<any>();
 
-  private rootFolder = '2'; // MOBILE 2
-  private actualFolder = '3'; // id the root folder
+  private rootFolder = '2';
+  private actualFolder = '3';
 
   constructor() {}
 
@@ -128,7 +128,6 @@ export class BookmarksService {
   }
 
   public update(id, obj) {
-    console.log(id, obj);
     return new Promise((resolve, reject) => {
       chrome.bookmarks.update(id, obj, () => {
         resolve();

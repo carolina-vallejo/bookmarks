@@ -28,6 +28,10 @@ export class ExtensionComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.subs.push(
       this.bookmarksService.refreshData.subscribe(data => {
+        if (this.results) {
+          this.results = null;
+          this.query = null;
+        }
         this.getFolderContent(data.id);
       })
     );
@@ -54,7 +58,7 @@ export class ExtensionComponent implements OnInit, AfterViewInit, OnDestroy {
     );
 
     this.subs.push(
-      this.bookmarksService.removed.subscribe(id => {
+      this.bookmarksService.removedBookmark.subscribe(id => {
         this.bookmarksService.removeBookmark(id).then(() => {
           //  get folder content
           this.getFolderContent(this.bookmarksService.getActualFolder());
@@ -99,7 +103,7 @@ export class ExtensionComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public search(event) {
-    this.bookmarksService.searchBookmarks(event.target.value).then(bookmarks => {
+    this.bookmarksService.searchBookmarksflat(event.target.value).then(bookmarks => {
       this.results = bookmarks;
     });
   }
@@ -107,7 +111,8 @@ export class ExtensionComponent implements OnInit, AfterViewInit, OnDestroy {
   public cleanSearch() {
     this.results = null;
     this.query = null;
-    this.refreshData();
+    // this.refreshData();
+    this.bookmarksService.refreshData.next({ id: this.bookmarksService.getActualFolder() });
   }
 
   public refreshData() {
@@ -124,6 +129,7 @@ export class ExtensionComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public getFolderContent(folderId) {
     this.bookmarksService.setActualFolder(folderId);
+
     this.bookmarksService.getSubtree(folderId).then(bookmarks => {
       this.bookmarks = bookmarks;
     });

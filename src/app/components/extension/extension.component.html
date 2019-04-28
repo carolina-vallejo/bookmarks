@@ -18,8 +18,5 @@
     <app-list [id]="idRootList" class="folder-drop" [folders]="foldersTree"></app-list>
   </div>
 
-  <!-- BOOKMARKS TREE -->
-  <!-- <app-list class="list-folders" [bookmarks]="results || bookmarks" typeData="all"></app-list> -->
-
-  <app-bookmarks [results]="false" class="list-bookmarks" *ngIf="bookmarks" [bookmarks]="results || bookmarks"></app-bookmarks>
+  <app-bookmarks class="list-bookmarks" *ngIf="bookmarks" [bookmarks]="results || bookmarks"></app-bookmarks>
 </div>
