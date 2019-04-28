@@ -2,7 +2,9 @@
 @import url('https://fonts.googleapis.com/css?family=Titillium+Web:300,400,600,700');
 @import url('https://fonts.googleapis.com/css?family=Inconsolata');
 @import './assets/sass/defaults';
+@import './assets/sass/icons';
 @import url('https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700');
+
 * {
   box-sizing: border-box;
 }
@@ -10,4 +12,30 @@
 body {
   background: #fff;
   font-family: $font;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: none;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: lighten($text, 20%);
+  border-radius: 0;
+  border-right: 4px solid $background;
+  border-left: 2px solid $background;
+  border-top: 2px solid $background;
+  border-bottom: 2px solid $background;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: $text;
 }

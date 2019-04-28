@@ -1,0 +1,13 @@
+<div class="inner" (click)="openFolder()">
+  <div class="count">{{ folder.count }}</div>
+  <div class="title">
+    <div class="text">
+      {{ folder.title }}
+    </div>
+    <div class="date">
+      {{ folder.dateAdded | amTimeAgo }}
+    </div>
+  </div>
+  <!--  Clear folder -->
+  <div class="clear" (click)="removeFolder($event)">×</div>
+</div>

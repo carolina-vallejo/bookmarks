@@ -1,4 +1,4 @@
-@import '../../../../assets/sass/defaults';
+@import '../../../assets/sass/defaults';
 
 :host {
   display: block;
@@ -20,7 +20,6 @@
   padding: $padding-popup;
   height: $header-height;
   width: 100%;
-  background: $gradient;
   box-shadow: 0 1px 10px rgba($text, 0.4);
   display: flex;
   justify-content: space-between;
@@ -31,28 +30,33 @@
 */
 .input-search-wrapper {
   position: relative;
-  width: 50%;
+  width: calc(100% - #{$search-height + 15px});
+  background: $gradient;
+  border-radius: 40px;
+  height: $search-height;
 }
 .input-search {
   font-size: 18px;
   padding: 0 20px;
   color: $primary;
   font-family: $font;
-  border: 0;
-  height: $search-height;
   border-radius: 40px;
   display: flex;
   align-items: center;
-  border: 1px solid #fff;
   background: rgba(#fff, 1);
-  width: 100%;
+  width: calc(100% - 4px);
+  height: calc(100% - 4px);
+  position: relative;
+  top: 2px;
+  left: 2px;
+  border: 0;
   &:focus {
     outline: none;
   }
 }
 
 ::-webkit-input-placeholder {
-  color: rgba($primary, 0.5);
+  color: rgba($text, 0.3);
 }
 
 .clear-search {
@@ -79,13 +83,14 @@
   height: $search-height;
   border-radius: 100%;
   color: #fff;
-  border: 1px solid #fff;
+  background: $gradient;
+  // border: 1px solid $primary;
   line-height: $search-height;
   text-align: center;
   font-size: 22px;
   font-weight: 700;
   cursor: pointer;
-  background: rgba(#fff, 0);
+  // background: rgba(#fff, 0);
   user-select: none;
 }
 
@@ -97,17 +102,37 @@
   position: absolute;
   top: $header-height;
   left: 0;
-  padding: $padding-popup;
+  padding: 0;
   height: calc(100% - #{$header-height});
-  overflow-x: hidden;
-  overflow-y: auto;
-  background: $gradientDark;
+  overflow: hidden;
+  background: $background;
   width: 100%;
   display: flex;
 }
 .list-folders {
   width: 50%;
 }
-.list-container {
-  width: 50%;
+
+.list-folder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: $w-list-folder;
+  height: 100%;
+  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-left: 10px;
+  background: #ffffff;
+}
+
+.list-bookmarks {
+  position: absolute;
+  top: 0;
+  left: $w-list-folder;
+  width: calc(100% - #{$w-list-folder});
+  height: 100%;
+  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
 }

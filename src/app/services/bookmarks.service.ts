@@ -8,22 +8,49 @@ declare const chrome;
 })
 export class BookmarksService {
   public removed: Subject<any> = new Subject<any>();
+  public removedFolder: Subject<any> = new Subject<any>();
+  public addedFolder: Subject<any> = new Subject<any>();
+  public updated: Subject<any> = new Subject<any>();
+  public refreshData: Subject<any> = new Subject<any>();
+  public refreshList: Subject<any> = new Subject<any>();
+
+  private rootFolder = '2'; // MOBILE 2
+  private actualFolder = '3'; // id the root folder
 
   constructor() {}
 
-  public getBookmarks(rootFolderId) {
+  public getBookmarks() {
     return new Promise((resolve, reject) => {
       chrome.bookmarks.getTree(bookmarks => {
-        console.log(bookmarks);
-        resolve(this.recursion(bookmarks[0].children[parseInt(rootFolderId, 10)]));
+        resolve(this.recursion(bookmarks[0].children[parseInt(this.rootFolder, 10)]));
       });
     });
   }
 
-  public searchBookmarks(query: string, rootFolderId) {
+  //  Search busca en todos los bookmarks
+  public searchBookmarks(query: string) {
     return new Promise((resolve, reject) => {
       chrome.bookmarks.getTree(bookmarks => {
-        resolve(this.recursion(bookmarks[0].children[parseInt(rootFolderId, 10)], query));
+        resolve(this.recursion(bookmarks[0].children[parseInt(this.rootFolder, 10)], query));
+      });
+    });
+  }
+
+  //  Search busca en todos los bookmarks
+  public searchBookmarksflat(query: string) {
+    return new Promise((resolve, reject) => {
+      chrome.bookmarks.search(query, bookmarks => {
+        console.log(bookmarks);
+        resolve(this.recursion({ children: bookmarks }));
+      });
+    });
+  }
+
+  public getSubtree(id: string) {
+    this.actualFolder = id;
+    return new Promise((resolve, reject) => {
+      chrome.bookmarks.getSubTree(id, bookmarks => {
+        resolve(this.recursion(bookmarks[0]));
       });
     });
   }
@@ -44,6 +71,14 @@ export class BookmarksService {
     });
   }
 
+  public removeFolder(id: string) {
+    return new Promise((resolve, reject) => {
+      chrome.bookmarks.removeTree(id, () => {
+        resolve();
+      });
+    });
+  }
+
   public getUrlActiveTab() {
     return new Promise((resolve, reject) => {
       chrome.tabs.query(
@@ -59,10 +94,25 @@ export class BookmarksService {
     });
   }
 
-  public addBookmark(url, title?, folderId?) {
+  public addBookmark(url, title?) {
     return new Promise((resolve, reject) => {
       const obj = {
-        url
+        url,
+        parentId: this.actualFolder
+      };
+      if (title) {
+        obj['title'] = title;
+      }
+      chrome.bookmarks.create(obj, () => {
+        resolve();
+      });
+    });
+  }
+
+  public addFolder(folderId, title?) {
+    return new Promise((resolve, reject) => {
+      const obj = {
+        url: null
       };
       if (folderId) {
         obj['parentId'] = folderId;
@@ -72,6 +122,15 @@ export class BookmarksService {
       }
 
       chrome.bookmarks.create(obj, () => {
+        resolve();
+      });
+    });
+  }
+
+  public update(id, obj) {
+    console.log(id, obj);
+    return new Promise((resolve, reject) => {
+      chrome.bookmarks.update(id, obj, () => {
         resolve();
       });
     });
@@ -135,5 +194,13 @@ export class BookmarksService {
 
   private checkTitle(data, query) {
     return data.title.toLowerCase().indexOf(query.toLowerCase()) > -1;
+  }
+
+  public setActualFolder(folderId: string) {
+    this.actualFolder = folderId;
+  }
+
+  public getActualFolder(): string {
+    return this.actualFolder;
   }
 }

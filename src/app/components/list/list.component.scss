@@ -1,40 +1,123 @@
 @import '../../../assets/sass/defaults';
 
 :host {
-  display: block;
-  position: relative;
-  width: 100%;
-}
-
-.node {
-  width: $node-width;
   display: inline-block;
-}
-
-.folder {
+  padding: 0 0 0 10px;
   width: 100%;
-  border: 1px dashed $text;
-  padding: $padding-folder;
-  margin: 10px;
-  background: rgba($text, 0.5);
+  background: rgba(#fff, 1);
+  border-top: 1px solid rgba($text, 0.2);
+}
+
+.inner {
+  border-radius: 0;
+  height: auto;
+  position: relative;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
   cursor: pointer;
+  &.active {
+    .count-text {
+      color: rgba($primary, 1);
+    }
+    .count {
+      &:before {
+        color: rgba($primary, 1);
+      }
+    }
+  }
 }
 
-.title-folder {
-  color: $text;
-  font-weight: 300;
-  font-size: 24px;
-  margin-bottom: 10px;
-  font-weight: 600;
-}
-
-.num {
-  float: right;
-  padding: 0px 12px;
-  border-radius: 20px;
+.title {
   font-size: 14px;
-  height: 20px;
-  line-height: 20px;
-  color: $text;
-  border: 1px solid $text;
+  font-weight: 700;
+  width: calc(100% - #{$folder-height});
+  color: darken($text, 7%);
+  padding: 0 10px;
+  height: $folder-height;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: flex-start;
+  align-content: stretch;
+  flex: 0 1 auto;
+  &.edit-mode {
+    width: 100%;
+  }
+}
+
+.text {
+  width: 90%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.count {
+  position: relative;
+  width: 20px;
+  flex: 0 0 auto;
+  color: rgba($text, 0.8);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  &:before {
+    position: absolute;
+    color: rgba($text, 0.2);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+  }
+}
+
+.count-text {
+  position: relative;
+  z-index: 1;
+}
+
+.add-folder {
+  width: 20px;
+  font-size: 20px;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translate(0, -50%);
+  text-align: center;
+  cursor: pointer;
+  color: $primary;
+  &:hover {
+    background: rgba($text, 0.1);
+  }
+}
+
+.input {
+  width: 100%;
+  height: 30px;
+  border: 1px solid rgba($text, 0.4);
+  border-radius: 6px;
+  padding-left: 4px;
+  &::placeholder {
+    color: rgba($text, 0.4);
+  }
+  &:focus {
+    outline: none;
+    border: 1px solid $primary;
+  }
+}
+
+.clear-edit {
+  right: 16px;
+  position: absolute;
+  font-size: 20px;
+  font-weight: 300;
+  opacity: 0.5;
+  cursor: pointer;
 }

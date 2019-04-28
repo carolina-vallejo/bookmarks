@@ -4,9 +4,10 @@ $font: 'Nunito Sans';
 
 // Background
 $primary: #ed5269;
-$gradient: linear-gradient(90deg, #ed5269 27%, #fead09 110%);
+$secondary: #fead09;
+$gradient: linear-gradient(90deg, $primary 27%, $secondary 110%);
 
-$gradientDark: lighten($text, 45%);
+$background: lighten($text, 47%);
 
 //  MARGINS
 $padding-top-popup: 20px;
@@ -16,8 +17,16 @@ $padding-popup: 20px 30px;
 //  SIZE
 $node-width: 100%;
 $node-circle: 36px;
-$search-height: 40px;
+$search-height: 36px;
 $header-height: $search-height + $padding-top-popup * 2;
 
 // Folders
 $padding-folder: 10px;
+$folder-height: 42px;
+
+// Lists
+$w-list-folder: 200px;
+
+//  Popup
+$w-popup: 450px;
+$h-popup: 550px;

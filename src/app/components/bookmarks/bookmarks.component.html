@@ -1,0 +1,12 @@
+<div *ngFor="let bookmark of bookmarks.children">
+  <ng-container [ngSwitch]="bookmark.type">
+    <app-folder [folder]="bookmark" *ngSwitchCase="'folder'"></app-folder>
+    <app-node [attr.id]="bookmark.id" [idNode]="bookmark.id" [node]="bookmark" *ngSwitchCase="'bookmark'" class="bookmark-drag"></app-node>
+  </ng-container>
+
+  <ng-container *ngIf="results">
+    <ng-container *ngFor="let subBookmark of bookmark.children">
+      <app-bookmarks class="list-bookmarks" [children]="subBookmark"></app-bookmarks>
+    </ng-container>
+  </ng-container>
+</div>

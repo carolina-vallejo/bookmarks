@@ -8,6 +8,7 @@ import * as interact from 'interactjs';
 })
 export class DropService {
   public dropped: Subject<any> = new Subject<any>();
+  public onDrag: Subject<any> = new Subject<any>();
   private dragabble: any;
 
   constructor() {}
@@ -15,9 +16,9 @@ export class DropService {
   public drop(dragElm, dropElm) {
     interact(dropElm).dropzone({
       accept: dragElm,
-      overlap: 0.75,
+      overlap: 0.3,
       ondragenter: event => {
-        event.target.style.background = 'red';
+        event.target.style.background = 'rgba(87, 101, 107, 0.1)';
         this.dragabble.draggable({
           restrict: {
             restriction: 'self'
@@ -25,6 +26,7 @@ export class DropService {
         });
       },
       ondragleave: event => {
+        event.target.style.background = 'white';
         this.dragabble.draggable({
           restrict: {
             restriction: 'parent'
@@ -32,6 +34,7 @@ export class DropService {
         });
       },
       ondrop: event => {
+        event.target.style.background = 'white';
         const x = parseInt(event.relatedTarget.getAttribute('data-x'), 10);
         const y = parseInt(event.relatedTarget.getAttribute('data-y'), 10);
 
@@ -46,6 +49,8 @@ export class DropService {
         }, 0);
       },
       ondropdeactivate: event => {
+        event.target.style.background = 'white';
+
         setTimeout(() => {
           event.relatedTarget.style.opacity = 1;
           this.cleanTranslation(event);
@@ -78,6 +83,12 @@ export class DropService {
         // update the position attributes
         target.setAttribute('data-x', x);
         target.setAttribute('data-y', y);
+      },
+      onstart: event => {
+        this.onDrag.next({ node: event.target, drag: true });
+      },
+      onend: event => {
+        this.onDrag.next({ node: event.target, drag: false });
       }
     });
     return this.dragabble;
@@ -90,5 +101,14 @@ export class DropService {
     // update the posiion attributes
     target.setAttribute('data-x', 0);
     target.setAttribute('data-y', 0);
+  }
+
+  public generateUri() {
+    var uri = '';
+    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+
+    for (var i = 0; i < 9; i++) uri += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return uri;
   }
 }

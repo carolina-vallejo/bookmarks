@@ -1,0 +1,25 @@
+<div class="header">
+  <!--  SEARCH -->
+  <div class="input-search-wrapper">
+    <input class="input-search" [(ngModel)]="query" (keyup.enter)="search($event)" placeholder="Search in Bookmarks" />
+    <div class="clear-search" (click)="cleanSearch()" *ngIf="results">×</div>
+  </div>
+
+  <!-- ADD BOOKMARK -->
+  <div class="actions">
+    <div class="add-bookmark" (click)="addBookmark()">+</div>
+  </div>
+</div>
+
+<!-- CONTAINER -->
+<div class="container">
+  <!-- DRAG FOLDERS -->
+  <div class="list-folder">
+    <app-list [id]="idRootList" class="folder-drop" [folders]="foldersTree"></app-list>
+  </div>
+
+  <!-- BOOKMARKS TREE -->
+  <!-- <app-list class="list-folders" [bookmarks]="results || bookmarks" typeData="all"></app-list> -->
+
+  <app-bookmarks [results]="false" class="list-bookmarks" *ngIf="bookmarks" [bookmarks]="results || bookmarks"></app-bookmarks>
+</div>

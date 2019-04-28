@@ -2,7 +2,7 @@
 
 :host {
   display: block;
-  width: 550px;
-  height: 600px;
+  width: $w-popup;
+  height: $h-popup;
   overflow: auto;
 }

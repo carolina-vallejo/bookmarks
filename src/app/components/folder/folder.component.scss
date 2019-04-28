@@ -5,46 +5,47 @@
   padding: 10px;
   cursor: pointer;
   width: 100%;
-  &:hover {
-    .circle {
-      background-color: rgba(#fff, 0.3);
-    }
-  }
 }
+
 .inner {
-  border-radius: $node-circle;
+  border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: $node-circle;
+  height: $folder-height;
   box-shadow: 1px 1px 10px rgba($text, 0.3);
   overflow: hidden;
   position: relative;
 }
-.circle {
-  width: $node-circle;
-  height: $node-circle;
-  display: block;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 50%;
-  background-color: rgba(#fff, 0.8);
+
+.count {
+  width: $folder-height;
+  height: $folder-height;
+  background-color: rgba($text, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 14px;
   transition: all 200ms ease;
+  flex: 0 0 auto;
 }
 
 .title {
   background: rgba(#fff, 1);
-  font-size: 13px;
-  width: calc(100% - #{$node-circle});
-  color: $text;
+  font-size: 14px;
+  font-weight: 700;
+  width: calc(100% - #{$folder-height});
+  color: darken($text, 7%);
   padding: 0 10px;
-  height: $node-circle;
+  height: $folder-height;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   justify-content: center;
   align-items: flex-start;
   align-content: stretch;
+  flex: 0 1 auto;
 }
 
 .text {
@@ -56,13 +57,13 @@
 
 .folder {
   border: 1px solid rgba(#fff, 0.3);
-  width: $node-circle - 5px;
-  height: $node-circle - 5px;
+  width: $folder-height - 5px;
+  height: $folder-height - 5px;
   border-radius: 0;
   text-transform: uppercase;
   display: block;
   text-align: center;
-  line-height: $node-circle - 5px;
+  line-height: $folder-height - 5px;
   margin: 5px auto;
   color: $text;
   font-size: 18px;
@@ -70,7 +71,7 @@
   position: relative;
   &::before {
     content: '';
-    width: $node-circle/2;
+    width: $folder-height/2;
     height: 7px;
     display: block;
     position: absolute;
@@ -89,12 +90,7 @@
   transform: translate(0, -50%);
   cursor: pointer;
 }
-
 .date {
   font-size: 11px;
   opacity: 0.5;
-}
-:host-context(.dragging) {
-  width: 200px;
-  position: fixed;
 }

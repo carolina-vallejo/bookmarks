@@ -1,47 +1,50 @@
-<ng-container *ngIf="bookmarks">
-  <ng-container [ngSwitch]="bookmarks.type">
+<ng-container *ngIf="folders && folders.type === 'folder'">
+  <div class="inner">
     <div
-      (click)="openBookmark(bookmarks)"
-      class="title-folder"
-      *ngSwitchCase="'folder'"
-      [ngStyle]="{
-        'font-size': 18 + 'px'
+      class="head"
+      (click)="openFolder(folders, $event)"
+      [ngClass]="{
+        active: active
       }"
     >
-      {{ bookmarks.title }}
-      <div class="num">
-        {{ bookmarks.count }}
+      <div
+        class="count icon-folder"
+        [ngClass]="{
+          'icon-folder': !active,
+          'icon-folder_line': active
+        }"
+      >
+        <span class="count-text">
+          {{ folders.count }}
+        </span>
       </div>
+      <div
+        class="title"
+        [ngClass]="{
+          'edit-mode': !folders.title || editTitle
+        }"
+      >
+        <div class="text" *ngIf="!(!folders.title || editTitle)" (dblclick)="editFolderTitle()">
+          {{ folders.title }}
+        </div>
+
+        <input
+          *ngIf="!folders.title || editTitle"
+          type="text"
+          class="input"
+          [(ngModel)]="titleModel"
+          (click)="$event.stopPropagation()"
+          (keyup.enter)="addFolderTitle(folders.id)"
+          placeholder="Add Name"
+        />
+        <div class="clear-edit" *ngIf="editTitle" (click)="editTitle = false; $event.stopPropagation()">×</div>
+      </div>
+
+      <!-- Add new folder -->
+      <div class="add-folder" *ngIf="!(!folders.title || editTitle)" (click)="addFolder(folders.id, $event)">+</div>
     </div>
-
-    <app-node [id]="bookmarks.id" [node]="bookmarks" *ngSwitchCase="'bookmark'" class="bookmark-drag"></app-node>
-  </ng-container>
-  <ng-container *ngFor="let subBookmarks of bookmarks.children">
-    <ng-container *ngIf="typeData === 'all'">
-      <app-list
-        typeData="all"
-        class="node"
-        [ngClass]="{
-          bookmark: subBookmarks.type === 'bookmark',
-          folder: subBookmarks.type === 'folder'
-        }"
-        [children]="subBookmarks"
-      ></app-list>
+    <ng-container *ngFor="let subFolder of folders.children">
+      <app-list *ngIf="subFolder.type === 'folder'" [id]="subFolder.id" class="folder-drop folder" [children]="subFolder"></app-list>
     </ng-container>
-
-    <ng-container *ngIf="typeData === 'folder'">
-      <app-list
-        [id]="subBookmarks.id"
-        typeData="folder"
-        *ngIf="subBookmarks.type === 'folder'"
-        class="node"
-        [ngClass]="{
-          bookmark: subBookmarks.type === 'bookmark',
-          folder: subBookmarks.type === 'folder',
-          'folder-drop': subBookmarks.type === 'folder'
-        }"
-        [children]="subBookmarks"
-      ></app-list>
-    </ng-container>
-  </ng-container>
+  </div>
 </ng-container>

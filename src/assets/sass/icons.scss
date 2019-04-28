@@ -1,0 +1,36 @@
+@font-face {
+  font-family: 'icons';
+  src: url('assets/icons/icons.eot?54242245');
+  src: url('assets/icons/icons.eot?54242245#iefix') format('embedded-opentype'), url('assets/icons/icons.woff2?54242245') format('woff2'),
+    url('assets/icons/icons.woff?54242245') format('woff'), url('assets/icons/icons.ttf?54242245') format('truetype'),
+    url('assets/icons/icons.svg?54242245#icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'icons';
+    src: url('assets/icons/icons.svg?54242245#icons') format('svg');
+  }
+}
+*/
+
+[class^='icon-']:before,
+[class*=' icon-']:before {
+  font-family: 'icons';
+  font-style: normal;
+  font-weight: normal;
+  /* Font smoothing. That was taken from TWBS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-folder:before {
+  content: '\e800';
+} /* '' */
+.icon-folder_line:before {
+  content: '\e801';
+} /* '' */

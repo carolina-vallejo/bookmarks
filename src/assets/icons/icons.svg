@@ -1,0 +1,14 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>Copyright (C) 2019 by original authors @ fontello.com</metadata>
+<defs>
+<font id="icons" horiz-adv-x="1000" >
+<font-face font-family="icons" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
+<missing-glyph horiz-adv-x="1000" />
+<glyph glyph-name="folder" unicode="&#xe800;" d="M32 850h323l0 0c10 0 20-5 26-13l77-103 0 0c6-8 16-13 26-13h645l0 0c18 0 32-14 32-32v-807l0 0c0-18-14-32-32-32h-1097l0 0c-18 0-32 14-32 32v936l0 0c0 18 14 32 32 32z" horiz-adv-x="1161" />
+
+<glyph glyph-name="folder_line" unicode="&#xe801;" d="M1086-129h-1011c-26 0-48 22-48 48v862c0 26 22 48 48 48h298c15 0 29-7 38-19l71-95c2-3 6-5 10-5h594c26 0 48-21 48-48v-743c0-26-22-48-48-48z m-1011 922c-6 0-11-6-11-12v-862c0-6 5-12 11-12h1011c6 0 12 6 12 12v743c0 7-6 12-12 12h-594c-15 0-30 7-39 19l-71 95c-2 3-6 5-9 5h-298z" horiz-adv-x="1161" />
+</font>
+</defs>
+</svg>
