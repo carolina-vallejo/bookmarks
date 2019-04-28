@@ -14,7 +14,7 @@ export class BookmarksService {
   public refreshData: Subject<any> = new Subject<any>();
   public refreshList: Subject<any> = new Subject<any>();
 
-  private rootFolder = '2';
+  private rootFolder = '0';
   private actualFolder = '3';
 
   constructor() {}
@@ -23,6 +23,7 @@ export class BookmarksService {
     return new Promise((resolve, reject) => {
       chrome.bookmarks.getTree(bookmarks => {
         resolve(this.recursion(bookmarks[0].children[parseInt(this.rootFolder, 10)]));
+        // resolve(this.recursion(bookmarks[0]));
       });
     });
   }
