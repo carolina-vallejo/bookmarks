@@ -8,15 +8,16 @@
   <!-- ADD BOOKMARK -->
   <div class="actions">
     <div class="add-bookmark" (click)="addBookmark()">+</div>
+    <div class="icon-duplicates" (click)="duplicateMode = !duplicateMode; refreshList()"></div>
   </div>
 </div>
 
 <!-- CONTAINER -->
 <div class="container">
   <!-- DRAG FOLDERS -->
-  <div class="list-folder">
-    <app-list [id]="idRootList" class="folder-drop" [folders]="foldersTree"></app-list>
+  <div id="list-folder" class="list-folder">
+    <app-list id="list-0" class="folder-drop" [folders]="foldersTree"></app-list>
   </div>
 
-  <app-bookmarks class="list-bookmarks" *ngIf="bookmarks" [bookmarks]="results || bookmarks"></app-bookmarks>
+  <app-bookmarks class="list-bookmarks" *ngIf="bookmarks" [bookmarks]="results || bookmarks" [parents]="parentsMap"></app-bookmarks>
 </div>

@@ -17,12 +17,13 @@
   position: absolute;
   top: 0;
   left: 0;
-  padding: $padding-popup;
+  padding: 20px 20px;
   height: $header-height;
   width: 100%;
-  box-shadow: 0 1px 10px rgba($text, 0.4);
+  box-shadow: 0 1px 2px rgba($text, 0.4);
   display: flex;
   justify-content: space-between;
+  z-index: 1;
 }
 
 /*
@@ -30,10 +31,11 @@
 */
 .input-search-wrapper {
   position: relative;
-  width: calc(100% - #{$search-height + 15px});
+  width: 100%;
   background: $gradient;
   border-radius: 40px;
   height: $search-height;
+  margin-right: 20px;
 }
 .input-search {
   font-size: 18px;
@@ -89,6 +91,7 @@
   text-align: center;
   font-size: 22px;
   font-weight: 700;
+  margin-right: 15px;
   cursor: pointer;
   // background: rgba(#fff, 0);
   user-select: none;
@@ -122,7 +125,6 @@
   overflow: auto;
   overflow-x: hidden;
   overflow-y: auto;
-  padding-left: 10px;
   background: #ffffff;
 }
 
@@ -135,4 +137,23 @@
   overflow: auto;
   overflow-x: hidden;
   overflow-y: auto;
+}
+
+.icon-duplicates {
+  font-size: 30px;
+  color: $text;
+  position: relative;
+  top: 5px;
+  cursor: pointer;
+  opacity: 0.6;
+  &:hover {
+    opacity: 1;
+  }
+  &::before {
+    display: block;
+  }
+}
+
+.actions {
+  display: flex;
 }

@@ -2,16 +2,17 @@
 
 :host {
   display: inline-block;
-  padding: 0 0 0 10px;
   width: 100%;
   background: rgba(#fff, 1);
-  border-top: 1px solid rgba($text, 0.2);
+  // border-top: 1px solid rgba($text, 0.2);
 }
 
 .inner {
   border-radius: 0;
   height: auto;
   position: relative;
+  padding-left: 12px;
+  margin-left: -5px;
 }
 
 .head {
@@ -20,13 +21,33 @@
   justify-content: flex-start;
   position: relative;
   cursor: pointer;
+  padding-left: 10px;
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 600px;
+    right: 0px;
+    height: 42px;
+    bottom: 0;
+    background: rgba($text, 0);
+    border-bottom: 1px solid rgba($text, 0.2);
+    border-top: 1px solid rgba($text, 0);
+    z-index: 0;
+  }
   &.active {
+    &:before {
+      border-top: 1px solid rgba($text, 0.2);
+      background: lighten($text, 50%);
+    }
+
     .count-text {
       color: rgba($primary, 1);
+      background: lighten($text, 50%);
     }
     .count {
       &:before {
-        color: rgba($primary, 1);
+        // display: none;
       }
     }
   }
@@ -35,7 +56,7 @@
 .title {
   font-size: 14px;
   font-weight: 700;
-  width: calc(100% - #{$folder-height});
+  width: calc(100% - 60px);
   color: darken($text, 7%);
   padding: 0 10px;
   height: $folder-height;
@@ -46,16 +67,20 @@
   align-items: flex-start;
   align-content: stretch;
   flex: 0 1 auto;
+  z-index: 1;
   &.edit-mode {
     width: 100%;
   }
 }
 
 .text {
-  width: 90%;
+  width: 100%;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+}
+.text-root {
+  font-weight: 400;
 }
 
 .count {
@@ -70,7 +95,7 @@
   font-size: 12px;
   &:before {
     position: absolute;
-    color: rgba($text, 0.2);
+    color: rgba($text, 0.4);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -81,18 +106,36 @@
 .count-text {
   position: relative;
   z-index: 1;
+  background: #fff;
 }
 
 .add-folder {
   width: 20px;
   font-size: 20px;
   position: absolute;
-  right: 10px;
+  right: 30px;
   top: 50%;
   transform: translate(0, -50%);
   text-align: center;
   cursor: pointer;
   color: $primary;
+  &:hover {
+    background: rgba($text, 0.1);
+  }
+}
+
+.remove-folder {
+  width: 20px;
+  font-size: 15px;
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translate(0, -50%);
+  text-align: center;
+  cursor: pointer;
+  color: rgba($text, 0.5);
+  height: 22px;
+  line-height: 1.6;
   &:hover {
     background: rgba($text, 0.1);
   }
@@ -120,4 +163,15 @@
   font-weight: 300;
   opacity: 0.5;
   cursor: pointer;
+}
+
+.root {
+  &.inner {
+    padding-left: 0;
+  }
+  .count {
+    &::before {
+      // display: none;
+    }
+  }
 }

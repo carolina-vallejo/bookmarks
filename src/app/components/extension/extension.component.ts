@@ -16,25 +16,43 @@ export class ExtensionComponent implements OnInit, AfterViewInit, OnDestroy {
   public idRootList: string;
   private subs: Array<Subscription> = [];
 
+  public duplicateMode: boolean = false;
+  public parentsMap: any = {};
+
   constructor(private readonly bookmarksService: BookmarksService, private readonly dropService: DropService) {}
 
   ngOnInit() {
-    this.idRootList = this.bookmarksService.getActualFolder();
+    this.subs.push(
+      this.bookmarksService.refreshData.subscribe(data => {
+        if (data) {
+          if (this.results) {
+            this.results = null;
+            this.query = null;
+          }
+          this.getFolderContent(data.id);
+          this.duplicateMode = false;
+          console.log('refresh data');
+        }
+      })
+    );
+
     //  Initial bookmars
     this.bookmarksService.getBookmarks().then(bookmarks => {
       this.foldersTree = bookmarks;
       this.bookmarks = bookmarks;
+
+      //  If there is a folder in cache
+      if (this.lastFolder && this.lastFolder !== 'undefined') {
+        this.bookmarksService.setActualFolder(this.lastFolder);
+        this.bookmarksService.refreshData.next({ id: this.lastFolder });
+
+        setTimeout(() => {
+          this.bookmarksService.scrollTo(this.lastFolder);
+        }, 0);
+      }
     });
 
-    this.subs.push(
-      this.bookmarksService.refreshData.subscribe(data => {
-        if (this.results) {
-          this.results = null;
-          this.query = null;
-        }
-        this.getFolderContent(data.id);
-      })
-    );
+    this.idRootList = this.bookmarksService.getActualFolder();
   }
 
   ngOnDestroy() {
@@ -81,9 +99,12 @@ export class ExtensionComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.subs.push(
       this.bookmarksService.removedFolder.subscribe(id => {
-        this.bookmarksService.removeFolder(id).then(() => {
+        this.bookmarksService.removeFolder(id).then((parentId: string) => {
           //  get folder content
-          this.getFolderContent(this.bookmarksService.getActualFolder());
+          this.bookmarksService.setActualFolder(parentId);
+          window.localStorage.setItem('lastFolderBookmarkExtension', parentId);
+          // console.log(parentId);
+          this.getFolderContent(parentId);
           //  get list
           this.refreshList();
         });
@@ -102,8 +123,8 @@ export class ExtensionComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  public search(event) {
-    this.bookmarksService.searchBookmarksflat(event.target.value).then(bookmarks => {
+  public search() {
+    this.bookmarksService.searchBookmarksflat(this.query).then(bookmarks => {
       this.results = bookmarks;
     });
   }
@@ -122,13 +143,26 @@ export class ExtensionComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public refreshList() {
-    this.bookmarksService.getBookmarks().then(bookmarks => {
-      this.foldersTree = bookmarks;
-    });
+    if (this.duplicateMode) {
+      this.refreshDuplicates();
+    } else if (this.results) {
+      this.bookmarksService.searchBookmarksflat(this.query).then(bookmarks => {
+        this.results = bookmarks;
+      });
+
+      this.bookmarksService.getBookmarks().then(bookmarks => {
+        this.foldersTree = bookmarks;
+      });
+    } else {
+      this.bookmarksService.getBookmarks().then(bookmarks => {
+        this.foldersTree = bookmarks;
+      });
+    }
   }
 
   public getFolderContent(folderId) {
     this.bookmarksService.setActualFolder(folderId);
+    window.localStorage.setItem('lastFolderBookmarkExtension', folderId);
 
     this.bookmarksService.getSubtree(folderId).then(bookmarks => {
       this.bookmarks = bookmarks;
@@ -144,5 +178,25 @@ export class ExtensionComponent implements OnInit, AfterViewInit, OnDestroy {
         this.refreshList();
       });
     });
+  }
+
+  private refreshDuplicates() {
+    this.bookmarksService.getDuplicates().then(bookmarks => {
+      this.bookmarks = bookmarks;
+
+      const duplicates = this.bookmarks.children.map(bookmark => {
+        return bookmark.parentId;
+      });
+      //  Get name of the parent
+      this.bookmarksService.getNode(duplicates).then((nodes: Array<any>) => {
+        nodes.forEach(node => {
+          this.parentsMap[node.id] = node;
+        });
+      });
+    });
+  }
+
+  public get lastFolder(): string {
+    return window.localStorage.getItem('lastFolderBookmarkExtension');
   }
 }

@@ -5,30 +5,32 @@
   padding: 10px;
   cursor: pointer;
   width: 100%;
-  &:hover {
-    .circle {
-      background-color: rgba(#fff, 0.3);
-    }
-  }
+  z-index: 10;
 }
 .inner {
   border-radius: $node-circle;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   height: $node-circle;
   box-shadow: 1px 1px 10px rgba($text, 0.3);
   overflow: hidden;
   position: relative;
+  background: #fff;
+  &:hover {
+    .circle {
+      background-color: lighten($text, 50%);
+    }
+  }
 }
 .circle {
-  width: $node-circle;
+  width: $node-circle - 5px;
   height: $node-circle;
   display: block;
   background-position: center;
   background-repeat: no-repeat;
   background-size: 50%;
-  background-color: rgba(#fff, 0.8);
+  background-color: lighten($text, 52%);
   transition: all 200ms ease;
 }
 
@@ -37,7 +39,7 @@
   font-size: 13px;
   width: calc(100% - #{$node-circle});
   color: $text;
-  padding: 0 10px;
+  padding: 0 10px 0 7px;
   height: $node-circle;
   display: flex;
   flex-direction: column;
@@ -97,4 +99,16 @@
 :host-context(.dragging) {
   width: 200px;
   position: fixed;
+}
+
+.parent-folder {
+  cursor: pointer;
+  padding: 0 0 7px 0;
+  color: $text;
+  font-size: 14px;
+  border-radius: 10px;
+  margin-top: -2px;
+  &:hover {
+    color: darken($text, 20%);
+  }
 }

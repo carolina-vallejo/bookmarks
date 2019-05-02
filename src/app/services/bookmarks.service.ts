@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 
 declare const chrome;
 
@@ -11,37 +11,64 @@ export class BookmarksService {
   public removedFolder: Subject<any> = new Subject<any>();
   public addedFolder: Subject<any> = new Subject<any>();
   public updated: Subject<any> = new Subject<any>();
-  public refreshData: Subject<any> = new Subject<any>();
+  public refreshData: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   public refreshList: Subject<any> = new Subject<any>();
 
-  private rootFolder = '0';
-  private actualFolder = '3';
+  private actualFolder;
+
+  private duplicates: { [url: string]: Array<any> } = {};
+  private dupliFlat: Array<any> = [];
+
+  public HEADER_HEIGHT = 72;
 
   constructor() {}
 
   public getBookmarks() {
     return new Promise((resolve, reject) => {
       chrome.bookmarks.getTree(bookmarks => {
-        resolve(this.recursion(bookmarks[0].children[parseInt(this.rootFolder, 10)]));
-        // resolve(this.recursion(bookmarks[0]));
+        // const result = this.recursion(bookmarks[0].children[parseInt(this.rootFolder, 10)]);
+
+        const result = this.recursion(bookmarks[0]);
+
+        resolve(result);
+      });
+    });
+  }
+
+  public getDuplicates() {
+    return new Promise((resolve, reject) => {
+      chrome.bookmarks.getTree(bookmarks => {
+        this.duplicates = {};
+        this.dupliFlat = [];
+
+        this.recursion(bookmarks[0], '', false, true);
+
+        Object.keys(this.duplicates).forEach(key => {
+          if (this.duplicates[key].length === 1) {
+            delete this.duplicates[key];
+          } else {
+            this.dupliFlat = this.dupliFlat.concat(this.duplicates[key]);
+          }
+        });
+
+        resolve({ children: this.dupliFlat });
       });
     });
   }
 
   //  Search busca en todos los bookmarks
-  public searchBookmarks(query: string) {
-    return new Promise((resolve, reject) => {
-      chrome.bookmarks.getTree(bookmarks => {
-        resolve(this.recursion(bookmarks[0].children[parseInt(this.rootFolder, 10)], query));
-      });
-    });
-  }
+  // public searchBookmarks(query: string) {
+  //   return new Promise((resolve, reject) => {
+  //     chrome.bookmarks.getTree(bookmarks => {
+  //       resolve(this.recursion(bookmarks[0].children[parseInt(this.rootFolder, 10)], query));
+  //     });
+  //   });
+  // }
 
   //  Search busca en todos los bookmarks
   public searchBookmarksflat(query: string) {
     return new Promise((resolve, reject) => {
       chrome.bookmarks.search(query, bookmarks => {
-        console.log(bookmarks);
         resolve(this.recursion({ children: bookmarks }));
       });
     });
@@ -52,6 +79,14 @@ export class BookmarksService {
     return new Promise((resolve, reject) => {
       chrome.bookmarks.getSubTree(id, bookmarks => {
         resolve(this.recursion(bookmarks[0]));
+      });
+    });
+  }
+
+  public getNode(id: string) {
+    return new Promise((resolve, reject) => {
+      chrome.bookmarks.get(id, bookmark => {
+        resolve(bookmark);
       });
     });
   }
@@ -72,10 +107,11 @@ export class BookmarksService {
     });
   }
 
-  public removeFolder(id: string) {
+  public removeFolder(folder: any) {
+    const parent = folder.parentId;
     return new Promise((resolve, reject) => {
-      chrome.bookmarks.removeTree(id, () => {
-        resolve();
+      chrome.bookmarks.removeTree(folder.id, () => {
+        resolve(parent);
       });
     });
   }
@@ -136,7 +172,7 @@ export class BookmarksService {
     });
   }
 
-  private recursion(googleTreeNode, query: string = '', forceKeep: boolean = false) {
+  private recursion(googleTreeNode, query: string = '', forceKeep: boolean = false, collectDuplicates: boolean = false) {
     if (googleTreeNode.children) {
       // if this is a folder
 
@@ -152,7 +188,7 @@ export class BookmarksService {
         .map(child => {
           // go through all the tree
           const childMatchesQuery = this.checkTitle(child, query);
-          return this.recursion(child, query, childMatchesQuery);
+          return this.recursion(child, query, childMatchesQuery, collectDuplicates);
         })
         // now we have lots of OUR treeNode (all the children and children children and .... are MAPPED!)
         .filter(child => {
@@ -176,6 +212,16 @@ export class BookmarksService {
       return treeNode;
     } else {
       // if  this is a bookmark
+
+      if (collectDuplicates) {
+        let treeNode = {
+          type: 'duplicate',
+          ...googleTreeNode
+        };
+
+        this.duplicates[googleTreeNode.url] = this.duplicates[googleTreeNode.url] || [];
+        this.duplicates[googleTreeNode.url].push(treeNode);
+      }
 
       // return our own version of the bookmark with type and COUNT
       // bookmark COUNT is 1
@@ -202,5 +248,17 @@ export class BookmarksService {
 
   public getActualFolder(): string {
     return this.actualFolder;
+  }
+
+  public scrollTo(idFolder) {
+    const elm = document.getElementById(idFolder);
+    if (elm) {
+      const top = elm.getBoundingClientRect().top - this.HEADER_HEIGHT;
+
+      const list = document.getElementById('list-folder');
+      const listTop = list.scrollTop;
+
+      list.scrollTo(0, top + listTop);
+    }
   }
 }

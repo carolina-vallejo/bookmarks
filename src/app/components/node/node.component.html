@@ -1,11 +1,7 @@
-<div
-  class="inner"
-  [title]="node.url"
-  (click)="openBookmark(node.url)"
-  [ngStyle]="{
-    opacity: node.count === 1 ? 1 : 0.3
-  }"
->
+<div class="parent-folder icon-folder_line" *ngIf="node.type === 'duplicate' && parent" (click)="openFolder(parent.id)">
+  {{ parent.title }}
+</div>
+<div class="inner" [title]="node.url" (click)="openBookmark(node.url)" [ngClass]="{ duplicate: node.type === 'duplicate' }">
   <div
     class="circle"
     [ngStyle]="{
@@ -17,7 +13,7 @@
     <div class="text">
       {{ node.title }}
     </div>
-    <div class="date">
+    <div class="date" *ngIf="node.type !== 'duplicate'">
       {{ node.dateAdded | amTimeAgo }}
     </div>
   </div>

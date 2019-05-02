@@ -31,7 +31,7 @@ export class ListComponent implements OnInit, OnDestroy {
 
     this.subs.push(
       this.bookmarksService.refreshData.subscribe(data => {
-        if (data.id === this.folders.id) {
+        if (this.folders && data && data.id === this.folders.id) {
           this.active = true;
         } else {
           this.active = false;
@@ -64,5 +64,10 @@ export class ListComponent implements OnInit, OnDestroy {
   public editFolderTitle() {
     this.titleModel = this.folders.title;
     this.editTitle = true;
+  }
+
+  public removeFolder(folder: any, event) {
+    event.stopPropagation();
+    this.bookmarksService.removedFolder.next(folder);
   }
 }

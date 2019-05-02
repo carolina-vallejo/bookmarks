@@ -1,5 +1,10 @@
 <ng-container *ngIf="folders && folders.type === 'folder'">
-  <div class="inner">
+  <div
+    class="inner"
+    [ngClass]="{
+      root: folders.id === '0'
+    }"
+  >
     <div
       class="head"
       (click)="openFolder(folders, $event)"
@@ -7,13 +12,7 @@
         active: active
       }"
     >
-      <div
-        class="count icon-folder"
-        [ngClass]="{
-          'icon-folder': !active,
-          'icon-folder_line': active
-        }"
-      >
+      <div *ngIf="folders.id !== '0'" class="count icon-folder_line">
         <span class="count-text">
           {{ folders.count }}
         </span>
@@ -24,12 +23,19 @@
           'edit-mode': !folders.title || editTitle
         }"
       >
-        <div class="text" *ngIf="!(!folders.title || editTitle)" (dblclick)="editFolderTitle()">
+        <div
+          [title]="folders.title"
+          class="text"
+          *ngIf="!(!folders.title || editTitle) && folders.id !== '0'"
+          (dblclick)="editFolderTitle()"
+        >
           {{ folders.title }}
         </div>
 
+        <div *ngIf="folders.id === '0'" class="text text-root">All my bookmarks</div>
+
         <input
-          *ngIf="!folders.title || editTitle"
+          *ngIf="(!folders.title || editTitle) && folders.id !== '0'"
           type="text"
           class="input"
           [(ngModel)]="titleModel"
@@ -42,6 +48,7 @@
 
       <!-- Add new folder -->
       <div class="add-folder" *ngIf="!(!folders.title || editTitle)" (click)="addFolder(folders.id, $event)">+</div>
+      <div class="remove-folder" *ngIf="!(!folders.title || editTitle)" (click)="removeFolder(folders, $event)">✕</div>
     </div>
     <ng-container *ngFor="let subFolder of folders.children">
       <app-list *ngIf="subFolder.type === 'folder'" [id]="subFolder.id" class="folder-drop folder" [children]="subFolder"></app-list>

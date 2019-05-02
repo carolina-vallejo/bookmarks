@@ -16,10 +16,14 @@ export class FolderComponent implements OnInit {
 
   public openFolder() {
     this.bookmarksService.refreshData.next({ id: this.folder.id });
+
+    setTimeout(() => {
+      this.bookmarksService.scrollTo(this.folder.id);
+    }, 0);
   }
 
   public removeFolder(event) {
     event.stopPropagation();
-    this.bookmarksService.removedFolder.next(this.folder.id);
+    this.bookmarksService.removedFolder.next(this.folder);
   }
 }

@@ -18,6 +18,9 @@ export class NodeComponent implements OnInit, OnDestroy {
   @Input()
   idNode: string;
 
+  @Input()
+  parent: any;
+
   public favicon: string;
   private subs: Array<Subscription> = [];
 
@@ -29,8 +32,6 @@ export class NodeComponent implements OnInit, OnDestroy {
     this.favicon = `-webkit-image-set(url("chrome://favicon/size/16@1x/${this.node.url}") 1x, url("chrome://favicon/size/16@2x/${
       this.node.url
     }") 2x)`;
-
-    // this.idNode = this.dropService.generateUri();
 
     this.subs.push(
       this.dropService.onDrag.subscribe(obj => {
@@ -62,5 +63,13 @@ export class NodeComponent implements OnInit, OnDestroy {
   public removeBookmark(id: string, event) {
     event.stopPropagation();
     this.bookmarksService.removedBookmark.next(id);
+  }
+
+  public openFolder(id) {
+    this.bookmarksService.refreshData.next({ id: id });
+
+    setTimeout(() => {
+      this.bookmarksService.scrollTo(id);
+    }, 0);
   }
 }
