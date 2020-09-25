@@ -96,10 +96,6 @@
   font-size: 11px;
   opacity: 0.5;
 }
-:host-context(.dragging) {
-  width: 200px;
-  position: fixed;
-}
 
 .parent-folder {
   cursor: pointer;
@@ -108,7 +104,17 @@
   font-size: 14px;
   border-radius: 10px;
   margin-top: -2px;
+  font-weight: 600;
   &:hover {
     color: darken($text, 20%);
   }
+  .date {
+    font-weight: 400;
+    font-size: 12px;
+  }
+}
+
+:host-context(.dragging) {
+  width: 200px;
+  position: fixed;
 }

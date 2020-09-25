@@ -33,7 +33,7 @@
 
 .title {
   background: rgba(#fff, 1);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   width: calc(100% - #{$folder-height});
   color: darken($text, 7%);
@@ -93,4 +93,10 @@
 .date {
   font-size: 11px;
   opacity: 0.5;
+}
+
+:host-context(.dragging) {
+  width: 200px;
+  position: fixed;
+  z-index: 10;
 }

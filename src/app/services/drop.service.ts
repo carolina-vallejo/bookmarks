@@ -35,8 +35,6 @@ export class DropService {
       },
       ondrop: event => {
         event.target.style.background = 'white';
-        const x = parseInt(event.relatedTarget.getAttribute('data-x'), 10);
-        const y = parseInt(event.relatedTarget.getAttribute('data-y'), 10);
 
         setTimeout(() => {
           //  ADD TO CANVAS!!!

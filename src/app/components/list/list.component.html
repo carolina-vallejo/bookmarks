@@ -48,7 +48,9 @@
 
       <!-- Add new folder -->
       <div class="add-folder" *ngIf="!(!folders.title || editTitle)" (click)="addFolder(folders.id, $event)">+</div>
-      <div class="remove-folder" *ngIf="!(!folders.title || editTitle)" (click)="removeFolder(folders, $event)">✕</div>
+      <div class="remove-folder" *ngIf="!(!folders.title || editTitle) && folders.parentId !== '0'" (click)="removeFolder(folders, $event)">
+        ✕
+      </div>
     </div>
     <ng-container *ngFor="let subFolder of folders.children">
       <app-list *ngIf="subFolder.type === 'folder'" [id]="subFolder.id" class="folder-drop folder" [children]="subFolder"></app-list>

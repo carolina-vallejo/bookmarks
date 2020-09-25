@@ -1,5 +1,9 @@
 <div class="inner" (click)="openFolder()">
-  <div class="count">{{ folder.count }}</div>
+  <div class="count">
+    <ng-container *ngIf="folder.type !== 'bookmark'">
+      {{ folder.count }}
+    </ng-container>
+  </div>
   <div class="title">
     <div class="text">
       {{ folder.title }}

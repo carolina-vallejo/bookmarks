@@ -35,7 +35,7 @@ export class NodeComponent implements OnInit, OnDestroy {
 
     this.subs.push(
       this.dropService.onDrag.subscribe(obj => {
-        if (this.idNode === obj.node.id) {
+        if (this.node.id === obj.node.id) {
           this.dragging = obj.drag;
           if (obj.drag) {
             this.allowUrl = false;

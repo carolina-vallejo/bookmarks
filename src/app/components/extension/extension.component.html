@@ -8,7 +8,12 @@
   <!-- ADD BOOKMARK -->
   <div class="actions">
     <div class="add-bookmark" (click)="addBookmark()">+</div>
-    <div class="icon-duplicates" (click)="duplicateMode = !duplicateMode; refreshList()"></div>
+    <div
+      class="icon-duplicates"
+      (click)="duplicateMode = !duplicateMode; refreshList()"
+      [ngClass]="{ active: duplicateMode }"
+      title="show duplicates"
+    ></div>
   </div>
 </div>
 

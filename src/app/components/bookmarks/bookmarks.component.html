@@ -1,5 +1,5 @@
 <div *ngFor="let bookmark of bookmarks.children">
-  <app-folder [folder]="bookmark" *ngIf="!bookmark.url"></app-folder>
+  <app-folder [attr.id]="bookmark.id" [folder]="bookmark" *ngIf="!bookmark.url" class="bookmark-drag"></app-folder>
 
   <app-node
     [attr.id]="bookmark.id"

@@ -145,12 +145,16 @@
   position: relative;
   top: 5px;
   cursor: pointer;
-  opacity: 0.6;
+  opacity: 0.5;
   &:hover {
     opacity: 1;
   }
   &::before {
     display: block;
+  }
+  &.active {
+    color: $text;
+    opacity: 1;
   }
 }
 

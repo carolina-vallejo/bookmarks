@@ -1,5 +1,5 @@
 <div class="parent-folder icon-folder_line" *ngIf="node.type === 'duplicate' && parent" (click)="openFolder(parent.id)">
-  {{ parent.title }}
+  {{ parent.title }} <span class="date">{{ parent.dateGroupModified | amTimeAgo }}</span>
 </div>
 <div class="inner" [title]="node.url" (click)="openBookmark(node.url)" [ngClass]="{ duplicate: node.type === 'duplicate' }">
   <div
