@@ -2,7 +2,13 @@
   "name": "Carolina's most awesome Bookmarks",
   "version": "1.0",
   "description": "Booooookmarks!!!",
-  "permissions": ["bookmarks", "activeTab", "declarativeContent", "storage", "chrome://favicon/"],
+  "permissions": [
+    "bookmarks",
+    "activeTab",
+    "declarativeContent",
+    "storage",
+    "chrome://favicon/"
+  ],
   "background": {
     "scripts": ["background.js"],
     "persistent": false
@@ -24,5 +30,5 @@
     "128": "assets/images/get_started128.png"
   },
   "manifest_version": 2,
-  "content_security_policy": "script-src 'self' 'unsafe-eval' 'sha256-n6hP7CWAomq3EYZ3b6LSDb2GgFRx9RiKSrvje+iglpE=' 'sha256-89K7jBBFXCX5X0DLYvZEym6gWmXcoT86hDxXgo8oogE='; object-src 'self'; img-src chrome://favicon;"
+  "content_security_policy": "script-src 'self' 'unsafe-eval' 'sha256-Db8eNpj9Svry8gof9jGiBp2XdUNucUxTSU1ppBDiO6E='; object-src 'self'; img-src chrome://favicon;"
 }
